@@ -11,7 +11,7 @@ const ticketSchema = new mongoose.Schema(
 
     description: {
       type: String,
-      required: [true, "Ticket describtion is required"],
+      required: [true, "Ticket description is required"],
       trim: true,
     },
 
@@ -44,6 +44,27 @@ const ticketSchema = new mongoose.Schema(
         filename: String,
         url: String,
         mimetype: String,
+      },
+    ],
+
+    message: [
+      {
+        sender: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+
+        message: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
   },

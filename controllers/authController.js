@@ -51,9 +51,9 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       message: "Registration failed",
-      error: error.message,
     });
   }
 };
@@ -69,6 +69,13 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         message: "Invalid email or password",
+      });
+    }
+
+    // Check if account is deactivated
+    if (user.status === "closed") {
+      return res.status(403).json({
+        message: "Account is deactivated",
       });
     }
 
@@ -107,9 +114,9 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       message: "Login failed",
-      error: error.message,
     });
   }
 };
